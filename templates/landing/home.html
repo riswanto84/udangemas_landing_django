@@ -1,0 +1,101 @@
+{% load static %}
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>{{ site.company_name }} — {{ site.tagline }}</title>
+  <meta name="description" content="{{ site.meta_description|default:site.hero_description|truncatechars:155 }}">
+  {% if site.favicon %}<link rel="icon" href="{{ site.favicon.url }}">{% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'landing/css/style.css' %}">
+  <style>:root{--green:{{ site.primary_color }};--green-dark:{{ site.secondary_color }};--gold:{{ site.accent_color }}}</style>
+</head>
+<body>
+<header class="topbar" id="siteHeader">
+  <a class="brand" href="#top">
+    {% if site.logo %}<img src="{{ site.logo.url }}" alt="Logo {{ site.company_name }}">{% else %}<img src="{% static 'landing/images/logo-shrimp.png' %}" alt="Logo {{ site.company_name }}">{% endif %}
+    <span><b>{{ site.company_name|upper }}</b><small>{{ site.tagline }}</small></span>
+  </a>
+  <nav class="desktop-nav" aria-label="Navigasi utama">
+    <a href="#top">Beranda</a><a href="#tentang">Tentang Kami</a><a href="#angka">Tambak Kami</a><a href="#organisasi">Organisasi</a><a href="#galeri">Galeri</a><a href="#kontak" class="nav-cta">Hubungi Kami</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Buka menu"><i class="bi bi-list"></i></button>
+</header>
+<div class="mobile-menu" id="mobileMenu"><a href="#tentang">Tentang Kami</a><a href="#angka">Tambak Kami</a><a href="#organisasi">Struktur Organisasi</a><a href="#galeri">Galeri</a><a href="#kontak">Hubungi Kami</a></div>
+
+<main id="top">
+<section class="hero" {% if site.hero_image %}style="--hero:url('{{ site.hero_image.url }}')"{% endif %}>
+  <div class="hero-overlay"></div>
+  <div class="hero-content reveal">
+    <span class="eyebrow">{{ site.hero_badge }}</span>
+    <h1>{{ site.hero_title_line_1 }} <em>{{ site.hero_title_highlight }}</em></h1>
+    <p>{{ site.hero_description }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ site.primary_button_url }}">{{ site.primary_button_text }} <i class="bi bi-arrow-right"></i></a>
+      {% if site.secondary_button_text %}<a class="btn btn-light" href="{{ site.secondary_button_url }}"><i class="bi bi-play-circle"></i>{{ site.secondary_button_text }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="feature-grid card-float reveal">
+  {% for item in features %}<article><span class="feature-icon"><i class="bi bi-{{ item.icon|default:'shield-check' }}"></i></span><div><h3>{{ item.title }}</h3><p>{{ item.description }}</p></div></article>{% endfor %}
+</section>
+
+<section class="section about reveal" id="tentang">
+  <div class="about-copy">
+    <span class="section-label">{{ about.label }}</span>
+    <h2>{{ about.title }}</h2>
+    {{ about.body|linebreaks }}
+    <div class="about-meta"><i class="bi bi-geo-alt-fill"></i>{{ site.address }}</div>
+  </div>
+  <div class="media-card">
+    {% if about.image %}<img src="{{ about.image.url }}" alt="Tambak {{ site.company_name }}">{% else %}<img src="{% static 'landing/images/pond-placeholder.svg' %}" alt="Tambak {{ site.company_name }}">{% endif %}
+    {% if about.video_url %}<a href="{{ about.video_url }}" target="_blank" rel="noopener" class="play"><i class="bi bi-play-fill"></i></a>{% endif %}
+    <div class="media-badge"><strong>2,5 Ha</strong><span>Luas Tambak</span></div>
+  </div>
+</section>
+
+<section class="section split-panel reveal">
+  <article><span class="section-label">Visi</span><p class="vision">{{ about.vision }}</p></article>
+  <article><span class="section-label">Misi</span><ul>{% for m in missions %}<li><i class="bi bi-check-circle-fill"></i><span>{{ m.description|default:m.title }}</span></li>{% endfor %}</ul></article>
+</section>
+
+<section class="section stats-panel reveal" id="angka" {% if site.hero_image %}style="--stats-bg:url('{{ site.hero_image.url }}')"{% endif %}>
+  <div class="section-heading light"><span>PROFIL OPERASIONAL</span><h2>{{ sections.stats_title }}</h2></div>
+  <div class="stats-grid">{% for s in stats %}<article><span class="stat-icon"><i class="bi bi-{{ s.icon|default:'bar-chart' }}"></i></span><strong>{{ s.value }}</strong><span>{{ s.title }}</span></article>{% endfor %}</div>
+</section>
+
+<section class="section clean reveal">
+  <div class="section-heading"><span>PRINSIP KAMI</span><h2>{{ sections.values_title }}</h2><p>Nilai yang menjadi dasar dalam setiap keputusan dan aktivitas budidaya.</p></div>
+  <div class="value-grid">{% for v in values %}<article><div class="icon-circle"><i class="bi bi-{{ v.icon|default:'star' }}"></i></div><h3>{{ v.title }}</h3><p>{{ v.description }}</p></article>{% endfor %}</div>
+</section>
+
+<section class="section org reveal" id="organisasi">
+  <div class="section-heading"><span>TIM KAMI</span><h2>{{ sections.organization_title }}</h2><p>{{ sections.organization_subtitle }}</p></div>
+  <div class="org-flow">
+    <div class="org-founder">{% for r in founders %}<article>{% if r.photo %}<img src="{{ r.photo.url }}" alt="{{ r.person_name|default:r.title }}">{% else %}<div class="avatar"><i class="bi bi-{{ r.icon|default:'person' }}"></i></div>{% endif %}<div><small>PIMPINAN</small><h3>{{ r.title }}</h3>{% if r.person_name %}<b>{{ r.person_name }}</b>{% endif %}<p>{{ r.description }}</p></div></article>{% endfor %}</div>
+    <div class="org-line"><span></span></div>
+    <div class="org-team">{% for r in team_roles %}<article>{% if r.photo %}<img src="{{ r.photo.url }}" alt="{{ r.person_name|default:r.title }}">{% else %}<div class="avatar"><i class="bi bi-{{ r.icon|default:'people' }}"></i></div>{% endif %}<div><h3>{{ r.title }}</h3>{% if r.person_name %}<b>{{ r.person_name }}</b>{% endif %}<p>{{ r.description }}</p></div></article>{% endfor %}</div>
+  </div>
+</section>
+
+<section class="section clean reveal">
+  <div class="section-heading"><span>INFRASTRUKTUR</span><h2>{{ sections.facilities_title }}</h2></div>
+  <div class="facility-grid">{% for f in facilities %}<article>{% if f.image %}<img src="{{ f.image.url }}" alt="{{ f.title }}">{% else %}<div class="icon-circle"><i class="bi bi-{{ f.icon|default:'building' }}"></i></div>{% endif %}<h3>{{ f.title }}</h3><p>{{ f.description }}</p></article>{% endfor %}</div>
+</section>
+
+<section class="section gallery-section reveal" id="galeri">
+  <div class="section-heading"><span>DOKUMENTASI</span><h2>{{ sections.gallery_title }}</h2></div>
+  <div class="gallery">{% for g in gallery %}<figure><img src="{{ g.image.url }}" alt="{{ g.title }}" loading="lazy"><figcaption><b>{{ g.title }}</b><span>{{ g.caption }}</span></figcaption></figure>{% empty %}<div class="empty">Tambahkan foto melalui menu Galeri Tambak pada halaman admin.</div>{% endfor %}</div>
+</section>
+
+<section class="cta reveal" id="kontak"><div class="cta-brand">{% if site.logo %}<img src="{{ site.logo.url }}" alt="">{% else %}<img src="{% static 'landing/images/logo-shrimp.png' %}" alt="">{% endif %}<div><span>{{ site.footer_title }}</span><h2>{{ site.footer_text }}</h2></div></div><div class="cta-actions">{% if site.email %}<a class="btn btn-gold" href="mailto:{{ site.email }}">Hubungi Kami <i class="bi bi-arrow-right"></i></a>{% endif %}{% if site.whatsapp_number %}<a class="btn btn-outline" href="https://wa.me/{{ site.whatsapp_number }}" target="_blank"><i class="bi bi-whatsapp"></i> Chat WhatsApp</a>{% endif %}</div></section>
+</main>
+
+<nav class="bottom-nav"><a href="#top" class="active"><i class="bi bi-house-fill"></i><span>Beranda</span></a><a href="#tentang"><i class="bi bi-info-square"></i><span>Tentang</span></a><a href="#galeri"><i class="bi bi-images"></i><span>Galeri</span></a><a href="#kontak"><i class="bi bi-chat-dots"></i><span>Kontak</span></a><a href="/admin/"><i class="bi bi-person-lock"></i><span>Admin</span></a></nav>
+<script src="{% static 'landing/js/main.js' %}"></script>
+</body></html>
