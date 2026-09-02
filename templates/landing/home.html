@@ -21,11 +21,11 @@
     <span><b>{{ site.company_name|upper }}</b><small>{{ site.tagline }}</small></span>
   </a>
   <nav class="desktop-nav" aria-label="Navigasi utama">
-    <a href="#top">Beranda</a><a href="#tentang">Tentang Kami</a><a href="#angka">Tambak Kami</a><a href="#organisasi">Organisasi</a><a href="#galeri">Galeri</a><a href="#kontak" class="nav-cta">Hubungi Kami</a>
+    <a href="#top">Beranda</a><a href="#tentang">Tentang Kami</a><a href="#angka">Tambak Kami</a><a href="#organisasi">Organisasi</a><a href="#galeri">Galeri</a>{% if site.whatsapp_number %}<a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener" class="nav-cta">Hubungi Kami</a>{% elif site.email %}<a href="mailto:{{ site.email }}" class="nav-cta">Hubungi Kami</a>{% endif %}
   </nav>
   <button class="menu-btn" id="menuBtn" aria-label="Buka menu"><i class="bi bi-list"></i></button>
 </header>
-<div class="mobile-menu" id="mobileMenu"><a href="#tentang">Tentang Kami</a><a href="#angka">Tambak Kami</a><a href="#organisasi">Struktur Organisasi</a><a href="#galeri">Galeri</a><a href="#kontak">Hubungi Kami</a></div>
+<div class="mobile-menu" id="mobileMenu"><a href="#tentang">Tentang Kami</a><a href="#angka">Tambak Kami</a><a href="#organisasi">Struktur Organisasi</a><a href="#galeri">Galeri</a>{% if site.whatsapp_number %}<a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener">Hubungi Kami</a>{% elif site.email %}<a href="mailto:{{ site.email }}">Hubungi Kami</a>{% endif %}</div>
 
 <main id="top">
 <section class="hero" {% if site.hero_image %}style="--hero:url('{{ site.hero_image.url }}')"{% endif %}>
@@ -93,9 +93,8 @@
   <div class="gallery">{% for g in gallery %}<figure><img src="{{ g.image.url }}" alt="{{ g.title }}" loading="lazy"><figcaption><b>{{ g.title }}</b><span>{{ g.caption }}</span></figcaption></figure>{% empty %}<div class="empty">Tambahkan foto melalui menu Galeri Tambak pada halaman admin.</div>{% endfor %}</div>
 </section>
 
-<section class="cta reveal" id="kontak"><div class="cta-brand">{% if site.logo %}<img src="{{ site.logo.url }}" alt="">{% else %}<img src="{% static 'landing/images/logo-shrimp.png' %}" alt="">{% endif %}<div><span>{{ site.footer_title }}</span><h2>{{ site.footer_text }}</h2></div></div><div class="cta-actions">{% if site.email %}<a class="btn btn-gold" href="mailto:{{ site.email }}">Hubungi Kami <i class="bi bi-arrow-right"></i></a>{% endif %}{% if site.whatsapp_number %}<a class="btn btn-outline" href="https://wa.me/{{ site.whatsapp_number }}" target="_blank"><i class="bi bi-whatsapp"></i> Chat WhatsApp</a>{% endif %}</div></section>
 </main>
 
-<nav class="bottom-nav"><a href="#top" class="active"><i class="bi bi-house-fill"></i><span>Beranda</span></a><a href="#tentang"><i class="bi bi-info-square"></i><span>Tentang</span></a><a href="#galeri"><i class="bi bi-images"></i><span>Galeri</span></a><a href="#kontak"><i class="bi bi-chat-dots"></i><span>Kontak</span></a><a href="/admin/"><i class="bi bi-person-lock"></i><span>Admin</span></a></nav>
+<nav class="bottom-nav"><a href="#top" class="active"><i class="bi bi-house-fill"></i><span>Beranda</span></a><a href="#tentang"><i class="bi bi-info-square"></i><span>Tentang</span></a><a href="#galeri"><i class="bi bi-images"></i><span>Galeri</span></a>{% if site.whatsapp_number %}<a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i><span>Kontak</span></a>{% elif site.email %}<a href="mailto:{{ site.email }}"><i class="bi bi-envelope"></i><span>Kontak</span></a>{% endif %}<a href="/admin/"><i class="bi bi-person-lock"></i><span>Admin</span></a></nav>
 <script src="{% static 'landing/js/main.js' %}"></script>
 </body></html>
