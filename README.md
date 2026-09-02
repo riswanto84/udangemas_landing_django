@@ -36,3 +36,4 @@ Format yang disarankan: JPG, PNG, atau WebP. Gambar disimpan dalam folder `media
 ## Produksi
 
 Sebelum dipasang di VPS, ubah `SECRET_KEY`, matikan `DEBUG`, isi `ALLOWED_HOSTS`, jalankan `collectstatic`, lalu gunakan Gunicorn dan Nginx.
+# udangemas_landing_django
