@@ -1,5 +1,4 @@
 {% load static %}
-{% load image_tags %}
 <!doctype html>
 <html lang="id">
 <head>
@@ -91,24 +90,16 @@
 
 <section class="section gallery-section reveal" id="galeri">
   <div class="section-heading"><span>DOKUMENTASI</span><h2>{{ sections.gallery_title }}</h2></div>
-  <div class="gallery">
-    {% for g in gallery %}
-        <figure>
-            <picture>
-                <source srcset="{{ g.image|optimized_image }}" type="image/webp">
-                <img src="{{ g.image.url }}"
-                     alt="{{ g.title }}"
-                     loading="lazy"
-                     decoding="async">
-            </picture>
-            <figcaption>{{ g.title }}</figcaption>
-        </figure>
-    {% empty %}
-        <div class="empty">
-            Tambahkan foto melalui menu Galeri di halaman admin.
-        </div>
-    {% endfor %}
-</div>
+  <div class="gallery">{% for g in gallery %}<figure>
+    <picture>
+      <source srcset="{{ g.optimized_url }}" type="image/webp">
+      <img src="{{ g.image.url }}"
+         alt="{{ g.title }}"
+         loading="lazy"
+         decoding="async">
+    </picture>
+    <figcaption><b>{{ g.title }}</b><span>{{ g.caption }}</span></figcaption></figure>{% empty %}<div class="empty">Tambahkan foto melalui menu Galeri Tambak pada halaman admin.</div>{% endfor %}
+  </div>
 </section>
 
 </main>
