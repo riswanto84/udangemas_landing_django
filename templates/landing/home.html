@@ -95,6 +95,22 @@
 
 </main>
 
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      {% if site.logo %}<img src="{{ site.logo.url }}" alt="Logo {{ site.company_name }}">{% else %}<img src="{% static 'landing/images/logo-shrimp.png' %}" alt="Logo {{ site.company_name }}">{% endif %}
+      <div><strong>{{ site.company_name }}</strong><span>{{ site.tagline }}</span></div>
+    </div>
+    <div class="footer-social" aria-label="Media sosial {{ site.company_name }}">
+      <span>Ikuti Kami</span>
+      <a href="https://www.instagram.com/udang.emas.nusantara/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Udang Emas Nusantara" title="Instagram: @udang.emas.nusantara"><i class="bi bi-instagram"></i><b>Instagram</b></a>
+      <a href="https://www.tiktok.com/@udang.emas.nusantara" target="_blank" rel="noopener noreferrer" aria-label="TikTok Udang Emas Nusantara" title="TikTok: @udang.emas.nusantara"><i class="bi bi-tiktok"></i><b>TikTok</b></a>
+      <a href="https://wa.me/628131717521" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Udang Emas Nusantara" title="WhatsApp: 08131717521"><i class="bi bi-whatsapp"></i><b>WhatsApp</b></a>
+    </div>
+  </div>
+  <div class="footer-copy">© {% now "Y" %} {{ site.company_name }}. Semua hak dilindungi.</div>
+</footer>
+
 <nav class="bottom-nav"><a href="#top" class="active"><i class="bi bi-house-fill"></i><span>Beranda</span></a><a href="#tentang"><i class="bi bi-info-square"></i><span>Tentang</span></a><a href="#galeri"><i class="bi bi-images"></i><span>Galeri</span></a>{% if site.whatsapp_number %}<a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i><span>Kontak</span></a>{% elif site.email %}<a href="mailto:{{ site.email }}"><i class="bi bi-envelope"></i><span>Kontak</span></a>{% endif %}<a href="/admin/"><i class="bi bi-person-lock"></i><span>Admin</span></a></nav>
 <script src="{% static 'landing/js/main.js' %}"></script>
 </body></html>
