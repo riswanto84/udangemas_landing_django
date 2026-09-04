@@ -22,7 +22,7 @@ class Command(BaseCommand):
             CompanyValue: [
                 ("Integritas","Kejujuran adalah dasar setiap langkah kami","shield-star"),
                 ("Inovasi","Teknologi adalah kunci untuk masa depan","lightbulb"),
-                ("Keberlanjutan","Menjaga keseimbangan produktivitas dan lingkungan","leaf"),
+                ("Keberlanjutan","Menjaga keseimbangan produktivitas dan lingkungan","tree-fill"),
                 ("Kualitas","Setiap panen harus memenuhi standar terbaik","award"),
                 ("Kemitraan","Tumbuh bersama pelanggan, investor, dan masyarakat","handshake"),
             ],
@@ -43,7 +43,24 @@ class Command(BaseCommand):
             for i,row in enumerate([("Luas Tambak","2,5 Ha","water"),("Kolam Pembesaran","6","circle"),("Kolam Tandon","2","circle"),("Pengawasan Berkala","Rutin","calendar-check"),("Pengawasan Keamanan","24/7","shield-check")]):
                 PondStat.objects.create(title=row[0],value=row[1],icon=row[2],order=i)
         if not OrganizationRole.objects.exists():
-            founder=OrganizationRole.objects.create(title="Founder",description="Memimpin strategi bisnis, pengembangan perusahaan, dan inovasi teknologi.",icon="person-badge",order=0)
-            for i,row in enumerate([("Manajer Operasional","Bertanggung jawab atas perencanaan, pengawasan, dan evaluasi operasional tambak.","gear"),("Teknisi","Melakukan pemeliharaan peralatan, monitoring kualitas air, dan dukungan teknis.","wrench-adjustable"),("Tim Operasional","Melaksanakan kegiatan harian tambak secara konsisten untuk produktivitas optimal.","people")],1):
-                OrganizationRole.objects.create(title=row[0],description=row[1],icon=row[2],parent=founder,order=i)
+            founder = OrganizationRole.objects.create(
+                title="Founder",
+                description="Memimpin strategi bisnis, pengembangan perusahaan, dan inovasi teknologi.",
+                icon="person-badge", order=0
+            )
+            manager = OrganizationRole.objects.create(
+                title="Manajer Operasional",
+                description="Bertanggung jawab atas perencanaan, pengawasan, dan evaluasi operasional tambak.",
+                icon="gear", parent=founder, order=1
+            )
+            OrganizationRole.objects.create(
+                title="Teknisi",
+                description="Melakukan pemeliharaan peralatan, monitoring kualitas air, dan dukungan teknis.",
+                icon="wrench-adjustable", parent=founder, order=2
+            )
+            OrganizationRole.objects.create(
+                title="Tim Operasional",
+                description="Melaksanakan kegiatan harian tambak secara konsisten untuk produktivitas optimal.",
+                icon="people", parent=manager, order=3
+            )
         self.stdout.write(self.style.SUCCESS("Konten awal berhasil dibuat."))

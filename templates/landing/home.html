@@ -37,7 +37,7 @@
     <p>{{ site.hero_description }}</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="{{ site.primary_button_url }}">{{ site.primary_button_text }} <i class="bi bi-arrow-right"></i></a>
-      <a class="btn btn-light" href="#galeri"><i class="bi bi-images"></i>Lihat Galeri</a>
+      {% if site.secondary_button_text %}<a class="btn btn-light" href="{{ site.secondary_button_url }}"><i class="bi bi-play-circle"></i>{{ site.secondary_button_text }}</a>{% endif %}
     </div>
   </div>
 </section>
@@ -72,7 +72,7 @@
 
 <section class="section clean reveal">
   <div class="section-heading"><span>PRINSIP KAMI</span><h2>{{ sections.values_title }}</h2><p>Nilai yang menjadi dasar dalam setiap keputusan dan aktivitas budidaya.</p></div>
-  <div class="value-grid">{% for v in values %}<article><div class="icon-circle"><i class="bi bi-{{ v.icon|default:'star' }}"></i></div><h3>{{ v.title }}</h3><p>{{ v.description }}</p></article>{% endfor %}</div>
+  <div class="value-grid">{% for v in values %}<article><div class="icon-circle"><i class="bi bi-{% if v.title == "Keberlanjutan" %}tree-fill{% elif v.icon == "shield-star" %}shield-check{% elif v.icon == "handshake" %}people-fill{% else %}{{ v.icon|default:"star" }}{% endif %}"></i></div><h3>{{ v.title }}</h3><p>{{ v.description }}</p></article>{% endfor %}</div>
 </section>
 
 <section class="section org reveal" id="organisasi">
@@ -80,7 +80,7 @@
   <div class="org-flow">
     <div class="org-founder">{% for r in founders %}<article>{% if r.photo %}<img src="{{ r.photo.url }}" alt="{{ r.person_name|default:r.title }}">{% else %}<div class="avatar"><i class="bi bi-{{ r.icon|default:'person' }}"></i></div>{% endif %}<div><small>PIMPINAN</small><h3>{{ r.title }}</h3>{% if r.person_name %}<b>{{ r.person_name }}</b>{% endif %}<p>{{ r.description }}</p></div></article>{% endfor %}</div>
     <div class="org-line"><span></span></div>
-    <div class="org-team">{% for r in team_roles %}<article>{% if r.photo %}<img src="{{ r.photo.url }}" alt="{{ r.person_name|default:r.title }}">{% else %}<div class="avatar"><i class="bi bi-{{ r.icon|default:'people' }}"></i></div>{% endif %}<div><h3>{{ r.title }}</h3>{% if r.person_name %}<b>{{ r.person_name }}</b>{% endif %}<p>{{ r.description }}</p></div></article>{% endfor %}</div>
+    <div class="org-team">{% for group in team_groups %}<div class="org-unit"><article>{% if group.role.photo %}<img src="{{ group.role.photo.url }}" alt="{{ group.role.person_name|default:group.role.title }}">{% else %}<div class="avatar"><i class="bi bi-{{ group.role.icon|default:'people' }}"></i></div>{% endif %}<div><h3>{{ group.role.title }}</h3>{% if group.role.person_name %}<b>{{ group.role.person_name }}</b>{% endif %}<p>{{ group.role.description }}</p></div></article>{% for child in group.children %}<div class="org-child"><article>{% if child.photo %}<img src="{{ child.photo.url }}" alt="{{ child.person_name|default:child.title }}">{% else %}<div class="avatar"><i class="bi bi-{{ child.icon|default:'people' }}"></i></div>{% endif %}<div><h3>{{ child.title }}</h3>{% if child.person_name %}<b>{{ child.person_name }}</b>{% endif %}<p>{{ child.description }}</p></div></article></div>{% endfor %}</div>{% endfor %}</div>
   </div>
 </section>
 
